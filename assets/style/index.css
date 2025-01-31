@@ -1,20 +1,74 @@
-body{
+body {
     margin: 0;
     padding: 0;
 }
 
-#boton{
+#boton {
     display: flex;
     justify-content: center;
 }
 
-.tarea{
+#container_tareas {
+    margin-left: 30px;
+
+}
+
+.tarea {
     display: flex;
-    gap:5px;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-around;
+    width: 600px;
+}
+
+.EstadoTask p {
+    text-align: center;
     align-items: center;
 }
 
-.acciones{
+
+
+
+
+.ActionTask {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 5px;
+    width: 200px;
+}
+
+
+
+.termina {
+    cursor: pointer;
+    background: green;
+    height: 25px;
+    width: 100px;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+
+.title-2{
+    margin-left: 30px;
+}
+
+.delete {
+    cursor: pointer;
+    background-color: red;
+
+    height: 25px;
+    width: 100px;
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+
 }

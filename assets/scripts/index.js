@@ -50,24 +50,28 @@ function GetTask() {
 
                     var nombreDiv = document.createElement('div');
                     nombreDiv.textContent = task.Nombre;
-
+                    var NameContainer = 'Estado'
                     var estadoDiv = document.createElement('div');
+                    estadoDiv.className = "EstadoTask"
+                    
                     var estadoP = document.createElement('p');
-                    estadoP.textContent = task.Estado;
                     var terminadaP = document.createElement('p');
                     var IfCompleta = "Terminada"
                     if (task.Completada == 0) {
                         IfCompleta = "Sin termintar "
                     }
                     terminadaP.textContent = IfCompleta;
-
+                    estadoDiv.textContent = "Estado"
                     var accionesDiv = document.createElement('div');
+                    accionesDiv.className = "ActionTask"
                     var finishButton = document.createElement('p');
-
+                    
                     finishButton.textContent = 'Terminar';
                     finishButton.onclick = function () { FinishTask(task.Id); };
                     var deleteButton = document.createElement('p');
                     deleteButton.textContent = 'Eliminar';
+                    finishButton.className = "termina"
+                    deleteButton.className = "delete"
                     deleteButton.onclick = function () { DeleteTask(task.Id); };
 
                     estadoDiv.appendChild(estadoP);
