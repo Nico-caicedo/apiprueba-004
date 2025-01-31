@@ -1,0 +1,20 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+#boton{
+    display: flex;
+    justify-content: center;
+}
+
+.tarea{
+    display: flex;
+    gap:5px;
+    align-items: center;
+}
+
+.acciones{
+    display: flex;
+    gap: 5px;
+}
