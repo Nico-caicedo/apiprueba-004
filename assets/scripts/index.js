@@ -1,36 +1,134 @@
+window.onload = function () {
+    GetTask();
+};
+
+var container = document.getElementById('container_tareas');
 
 
-var container = document.getElementById('container_tareas')
+var FormTask = document.getElementById('CreateTask');
 
+function CreateTask(event) {
+    event.preventDefault();
+    var Tarea = document.getElementById('TextTask').value;
 
-container = document.write('hola mundo desde js')
+    console.log(Tarea);
 
-var Tarea = document.getElementById('text')
-var FormTask = documenbt.getElementById('CreateTask')
-
-function CreateTask(){
-   FormTask =  e.preventDefault()
-
-   
-    console.log('hola mundo')
-    fetch('controller.php', {
+    fetch('./controllers/taskControllers.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: 'text=' + encodeURIComponent(Tarea),
+        body: 'TextTask=' + encodeURIComponent(Tarea),
     })
-    .then(response => response.text()) // Si el controlador devuelve texto
-    .then(data => {
-        console.log('Respuesta del servidor:', data);
-    })
-    .catch(error => {
-        console.error('Error en la petición:', error);
-    });
+        .then(response => response.text())
+        .then(data => {
+            console.log('Respuesta del servidor:', data);
+            GetTask();
+        })
+        .catch(error => {
+            console.error('Error en la petición:', error);
+        });
 }
 
 
+function GetTask() {
+    fetch('./controllers/TaskControllers.php')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Tareas:', data);
 
 
+            var container = document.getElementById('container_tareas');
 
-FormTask.addEventListener('submit', CreateTask);
+            container.innerHTML = '';
+
+
+            if (data.length > 0) {
+                data.forEach(task => {
+                    var tareaElement = document.createElement('div');
+                    tareaElement.classList.add('tarea');
+
+                    var nombreDiv = document.createElement('div');
+                    nombreDiv.textContent = task.Nombre;
+
+                    var estadoDiv = document.createElement('div');
+                    var estadoP = document.createElement('p');
+                    estadoP.textContent = task.Estado;
+                    var terminadaP = document.createElement('p');
+                    var IfCompleta = "Terminada"
+                    if (task.Completada == 0) {
+                        IfCompleta = "Sin termintar "
+                    }
+                    terminadaP.textContent = IfCompleta;
+
+                    var accionesDiv = document.createElement('div');
+                    var finishButton = document.createElement('p');
+
+                    finishButton.textContent = 'Terminar';
+                    finishButton.onclick = function () { FinishTask(task.Id); };
+                    var deleteButton = document.createElement('p');
+                    deleteButton.textContent = 'Eliminar';
+                    deleteButton.onclick = function () { DeleteTask(task.Id); };
+
+                    estadoDiv.appendChild(estadoP);
+                    estadoDiv.appendChild(terminadaP);
+                    accionesDiv.appendChild(finishButton);
+                    accionesDiv.appendChild(deleteButton);
+                    tareaElement.appendChild(nombreDiv);
+                    tareaElement.appendChild(estadoDiv);
+                    tareaElement.appendChild(accionesDiv);
+
+                    container.appendChild(tareaElement);
+                });
+            } else {
+                container.innerHTML = 'No se encontraron tareas.';
+            }
+
+        })
+        .catch(error => {
+            console.error('Error al obtener las tareas:', error);
+        });
+}
+
+function DeleteTask(IdTask) {
+    console.log("eliminada")
+    fetch('./controllers/taskControllers.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'Delete_Id=' + encodeURIComponent(IdTask),
+    })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Respuesta del servidor:', data);
+            GetTask();
+        })
+        .catch(error => {
+            console.error('Error en la petición:', error);
+        });
+}
+
+
+function FinishTask(IdTask) {
+    fetch('./controllers/taskControllers.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'Finish_Id=' + encodeURIComponent(IdTask),
+    })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Respuesta del servidor:', data);
+            GetTask();
+        })
+        .catch(error => {
+            console.error('Error en la petición:', error);
+        });
+}
+
+
+if (FormTask) {
+    FormTask.addEventListener('submit', CreateTask);
+}

@@ -14,17 +14,30 @@
     <h1>Dashboard de Tareas</h1>
 
     <form method="post" action="" id="CreateTask">
-        <input type="text" name="text" id="create" placeholder="Escribir tarea" required>
+        <input type="text" name="text" id="TextTask" placeholder="Escribir tarea" >
         <input type="submit" onclick="CreateTask()" name="crear" value="Crear">
     </form>
 
     <div>
         <h3>Tareas creadas</h3>
         <div id="container_tareas">
-           
+           <div class="tarea">
+                <div>Nombre</div>
+                <div>
+                    <p>Estado</p>
+                    <p>Terminada</p>
+                </div>
+                <div><p>acciones</p>
+                <div id="">
+                    <p onclick="finishTask">Terminar</p>
+                    <p onclick="DeleteTask">eliminar</p>
+                </div>
+                </div>
+           </div>
         </div>
     </div>
 
 </body>
 
 </html>
+
